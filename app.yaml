@@ -6,5 +6,9 @@ api_version: 1
 handlers:
 - url: /styles
   static_dir: styles
+- url: /js
+  static_dir: js
+- url: /img
+  static_dir: img
 - url: /.*
   script: index.py

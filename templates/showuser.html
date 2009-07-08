@@ -1,21 +1,78 @@
 {% extends "base.html" %}
 {% block bodycontent %}
 
-<table>
-  <th>
-    <td>封面</td>
-    <td>书名</td>
-    <td>进度</td>
-    <td>操作</td>
-  </th>
-  {% for book in books %}
-  <tr>
-    <td>{{ forloop.counter }}</td>
-    <td><img src="{{ book.img }}" /></td>
-    <td>{{ book.title }} </td>
-    <td>{{ book.done }} / {{ book.pages }} </td>
-  </tr>
+<style>
+/* single item */
+#thumbs div {
+    float:left;
+    width:214px;
+    height:300px;
+    background:#333 url(http://static.flowplayer.org/img/global/gradient/h150.png) repeat-x 0 146px;
+    color:#fff;
+    border-left:1px solid #333;
+    cursor:pointer;
+}
+
+/* style when mouse is over the item */
+#thumbs div.hover {
+    background-color:#444;
+}
+
+/* style when element is active (clicked) */
+#thumbs div.active {
+    background-color:#066;
+    cursor:default;
+}
+
+#thumbs h3, #thumbs p, #thumbs span {
+    margin:13px;
+    font-family:"bitstream vera sans";
+    font-size:13px;
+    color:#fff;
+}
+
+#thumbs h3 em {
+    font-style:normal;
+    color:yellow;
+}
+</style>
+
+<!-- navigator -->
+<div class="navi"></div>
+
+<!-- prev link -->
+<a class="prev"></a>
+
+<div class="scrollable">
+  <div id="thumbs">
+    {% for book in books %}
+    <div>
+      <img src="{{ book.img }}" />
+      <h3><em>{{ forloop.counter }}.</em>{{ book.title }}</h3>
+      <p>修改进度</p>
+      <span class="blue">{{ book.done }} / {{ book.pages }}</span>
+    </div>
   {% endfor %}
-</table>
+  </div>
+</div>
+
+<!-- next link -->
+<a class="next"></a>
+
+<br clear="all" />
+
+<script> 
+// execute your scripts when DOM is ready. this is a good habit 
+$(function() {         
+         
+    // initialize scrollable  
+    $("div.scrollable").scrollable({ 
+        size: 3, 
+        items: '#thumbs',   
+        hoverClass: 'hover' 
+    });     
+     
+}); 
+</script>
 
 {% endblock %}
