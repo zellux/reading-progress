@@ -4,6 +4,7 @@ runtime: python
 api_version: 1
 
 handlers:
+- url: /styles
+  static_dir: styles
 - url: /.*
   script: index.py
-

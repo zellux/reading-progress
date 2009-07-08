@@ -2,7 +2,7 @@
 
 from google.appengine.ext import db
 import douban, douban.service
-import pickle
+import pickle, re
 
 import logging
 
@@ -32,7 +32,6 @@ def ImportFromURL(name):
         return 'duplicate'
 
     user = UserInfo(uid=name)
-    db.put(user)
     
     books = client.GetMyCollection(
         url='/people/%s/collection'%name,
@@ -41,6 +40,11 @@ def ImportFromURL(name):
         status='reading',
         max_results=50)
 
+    uname = re.search('(.*) 的收藏', books.title.text)
+    if uname:
+        user.uname = unicode(uname.group(1), 'utf-8')
+    db.put(user)
+    
     logging.info(books.title.text)
     for b in books.entry:
         bs = BookState(

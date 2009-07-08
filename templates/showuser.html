@@ -2,11 +2,18 @@
 {% block bodycontent %}
 
 <table>
+  <th>
+    <td>封面</td>
+    <td>书名</td>
+    <td>进度</td>
+    <td>操作</td>
+  </th>
   {% for book in books %}
   <tr>
+    <td>{{ forloop.counter }}</td>
+    <td><img src="{{ book.img }}" /></td>
     <td>{{ book.title }} </td>
     <td>{{ book.done }} / {{ book.pages }} </td>
-    <td>{{ book.img }} </td>
   </tr>
   {% endfor %}
 </table>
