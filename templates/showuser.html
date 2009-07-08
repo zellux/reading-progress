@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block bodycontent %}
+
+<table>
+  {% for book in books %}
+  <tr>
+    <td>{{ book.title }} </td>
+    <td>{{ book.done }} / {{ book.pages }} </td>
+    <td>{{ book.img }} </td>
+  </tr>
+  {% endfor %}
+</table>
+
+{% endblock %}

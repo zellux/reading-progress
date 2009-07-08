@@ -36,6 +36,10 @@ class ShowUser(webapp.RequestHandler):
     def post(self):
         user = self.request.get('user')
         books = QueryUserBooks(user)
+        doRender(self, 'showuser.html', {'books': books});
+
+    def get(self):
+        self.post()
 
 application = webapp.WSGIApplication(
                                      [('/', MainPage),

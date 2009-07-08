@@ -1,11 +1,15 @@
 {% extends "base.html" %}
 {% block bodycontent %}
 
+{% ifequal books 'duplicate' %}
+该用户已经注册！<br />
+{% else %}
 <ul>
   {{ books.title.text }}
   {% for book in books.entry %}
   <li>{{ book.subject.title.text }} </li>
   {% endfor %}
 </ul>
+{% endifequal %}
 
 {% endblock %}
