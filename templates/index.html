@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block bodycontent %}
+<form action="/addUser" method="post">
+  <div><input type="text" name="user"><input type="submit" value="新增用户"></div>
+</form>
+<form action="/showUser" method="post">
+  <div><input type="text" name="user"><input type="submit" value="用户查询"></div>
+</form>
+{% endblock %}
