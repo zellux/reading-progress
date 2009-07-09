@@ -5,22 +5,10 @@ import logging, os
 
 from google.appengine.api import users
 from google.appengine.ext import webapp
-from google.appengine.ext.webapp import template
 from google.appengine.ext.webapp.util import run_wsgi_app
 
 from douban_db import *
-
-def doRender(handler, tmpl='index.html', values={}):
-    temp = os.path.join(os.path.dirname(__file__), 'templates/' + tmpl)
-    if not os.path.isfile(temp):
-        return False
-
-    newval = dict(values)
-    newval['path'] = handler.request.path
-    
-    outstr = template.render(temp, newval)
-    handler.response.out.write(outstr)
-    return True
+from renderer import *
 
 class MainPage(webapp.RequestHandler):
     def get(self):
@@ -29,14 +17,12 @@ class MainPage(webapp.RequestHandler):
 class AddUser(webapp.RequestHandler):
     def post(self):
         user = self.request.get('user')
-        books = ImportFromURL(user)
-        doRender(self, 'userinfo.html', {'books': books});
+        UserRegister(self, user)
 
 class ShowUser(webapp.RequestHandler):
     def post(self):
         user = self.request.get('user')
-        books = QueryUserBooks(user)
-        doRender(self, 'showuser.html', {'books': books});
+        QueryUserBooks(self, user)
 
     def get(self):
         self.post()

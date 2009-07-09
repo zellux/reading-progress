@@ -41,7 +41,6 @@ div.navi {
     height:20px;
 }
 
-
 /* items inside navigator */
 div.navi a {
     width:8px;
@@ -86,4 +85,45 @@ a.prev, a.next {
     margin-top:118px;
 }
 
+
+/* single item */
+#thumbs div.bookitem {
+    float:left;
+    width:214px;
+    height:300px;
+    /* background:#333 url(http://static.flowplayer.org/img/global/gradient/h150.png) repeat-x 0 146px; */
+    background: #333;
+    color:#fff;
+    border-left:1px solid #000;
+    cursor:pointer;
+}
+
+/* style when mouse is over the item */
+#thumbs div.bookitem.hover {
+    background-color:#444;
+}
+
+/* style when element is active (clicked) */
+#thumbs div.bookitem.active {
+    background-color:#066;
+    cursor:default;
+}
+
+#thumbs h3, #thumbs p, #thumbs span {
+    margin:13px;
+    font-family:"bitstream vera sans";
+    font-size:13px;
+    color:#fff;
+}
+
+#thumbs h3 em {
+    font-style:normal;
+    color:yellow;
+}
+
+#thumbs div.bookitem div.cover img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
 

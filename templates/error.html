@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}出错啦{% endblock %}
+{% block bodycontent %}
+{% if errormsg %}
+{{ errormsg }}
+{% else %}
+No details
+{% endif %}
+{% endblock %}

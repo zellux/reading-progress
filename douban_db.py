@@ -5,6 +5,7 @@ import douban, douban.service
 import pickle, re
 
 import logging
+from renderer import *
 
 SERVER = 'api.douban.com'
 API_KEY = '08ddb388b20b31581a991a9a16219408'
@@ -12,25 +13,28 @@ SECRET = 'a3ef59aefaa9b85e'
 
 client = douban.service.DoubanService(server=SERVER, api_key=API_KEY,secret=SECRET)
 
-class BookState(db.Model):
-    uid   = db.StringProperty(required=True)
+class UserInfo(db.Model):
+    uid = db.StringProperty(required=True)
     uname = db.StringProperty()
+
+class BookState(db.Model):
+    owner = db.ReferenceProperty(UserInfo)
     isbn  = db.StringProperty()
     title = db.StringProperty(required=True)
     pages = db.IntegerProperty(required=True)
     done  = db.IntegerProperty(required=True)
     img   = db.StringProperty()
 
-class UserInfo(db.Model):
-    uid = db.StringProperty(required=True)
-    uname = db.StringProperty()
-
-def ImportFromURL(name):
-    user = db.GqlQuery("SELECT * FROM UserInfo where uid='%s'"%name)
-    if user.count() > 0:
-        logging.info('Duplicated user: uid=%s'%user.get().uid)
-        return 'duplicate'
-
+def UserRegister(handler, name):
+    name = name.strip()
+    q = db.Query(UserInfo)
+    q = q.filter('uid = ', name)
+    results = q.fetch(limit=1)
+    if len(results) > 0:
+        logging.info('Duplicated user: uid=%s'%name)
+        doRender(handler, 'error.html', {'errormsg': '该用户已被注册'});
+        return
+    
     user = UserInfo(uid=name)
     
     books = client.GetMyCollection(
@@ -48,7 +52,7 @@ def ImportFromURL(name):
     logging.info(books.title.text)
     for b in books.entry:
         bs = BookState(
-            uid=name,
+            owner=user,
             title=unicode(b.subject.title.text.strip(), 'utf-8'),
             pages=0,
             done=0
@@ -70,17 +74,27 @@ def ImportFromURL(name):
         #     print attr.name, attr.text
         # print dir(b.subject.summary)
         db.put(bs)
-    return books
 
-def QueryUserBooks(name):
-    books = db.GqlQuery("SELECT * FROM BookState where uid='%s'"%name)
+    doRender(handler, 'userinfo.html', {'books': books});
+
+def QueryUserBooks(handler, name):
+    owner = QueryUser(name)
+    books = owner.bookstate_set
 
     logging.info("Query books of user %s\n"%name)
     if books.count() == 0:
         logging.info("Query result: Empty\n")
+        
+    doRender(handler, 'showuser.html', {'books': books, 'user': owner});
 
-    return books
+def QueryUser(name):
+    user = db.GqlQuery("SELECT * FROM UserInfo where uid='%s'"%name)
 
+    logging.info("Query user %s\n"%name)
+    if user.count() == 0:
+        logging.info("Query result: Empty\n")
+
+    return user.get()
 if __name__ == '__main__':
     books = client.GetMyCollection(url='/people/zellux/collection', cat='book', tag='', status='reading', max_results=50)
     # pickle.dump(books, open('mybooks.pickle', 'w'))
