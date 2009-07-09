@@ -25,6 +25,11 @@ class BookState(db.Model):
     done  = db.IntegerProperty(required=True)
     img   = db.StringProperty()
 
+class UpdatePoint(db.Model):
+    book = db.ReferenceProperty(BookState)
+    date = db.DateProperty(required=True)
+    page = db.IntegerProperty(required=True)
+    
 def UserRegister(handler, name):
     name = name.strip()
     q = db.Query(UserInfo)

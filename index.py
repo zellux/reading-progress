@@ -8,6 +8,7 @@ from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
 
 from douban_db import *
+from test import *
 from renderer import *
 
 class MainPage(webapp.RequestHandler):
@@ -27,11 +28,21 @@ class ShowUser(webapp.RequestHandler):
     def get(self):
         self.post()
 
+class TestRandomProgress(webapp.RequestHandler):
+    def post(self):
+        book = self.request.get('book')
+        randomProgress(self, book)
+
+    def get(self):
+        self.post()
+        
 application = webapp.WSGIApplication(
-                                     [('/', MainPage),
-                                      ('/addUser', AddUser),
-                                      ('/showUser', ShowUser)],
-                                     debug=True)
+    [('/', MainPage),
+     ('/addUser', AddUser),
+     ('/showUser', ShowUser),
+     ('/randomProgress', TestRandomProgress),
+     ],
+    debug=True)
 
 def main():
     run_wsgi_app(application)

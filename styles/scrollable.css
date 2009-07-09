@@ -109,7 +109,7 @@ a.prev, a.next {
     cursor:default;
 }
 
-#thumbs h3, #thumbs p, #thumbs span {
+#thumbs h3, #thumbs div.option, #thumbs span {
     margin:13px;
     font-family:"bitstream vera sans";
     font-size:13px;

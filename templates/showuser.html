@@ -14,7 +14,8 @@
     <div class="bookitem">
       <div class="cover"><img src="{{ book.img }}" /></div>
       <h3><em>{{ forloop.counter }}.</em>{{ book.title }}</h3>
-      <p>修改进度</p>
+      <div class="option">修改进度</div>
+      <div class="option"><a href="/randomProgress?book={{ book.key }}">随机进度生成</a></div>
       <span class="blue">{{ book.done }} / {{ book.pages }}</span>
     </div>
   {% endfor %}
