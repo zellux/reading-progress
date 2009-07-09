@@ -7,6 +7,12 @@ import pickle, re
 import logging
 from renderer import *
 
+from pygooglechart import Chart
+from pygooglechart import SimpleLineChart
+from pygooglechart import Axis
+
+import datetime
+
 SERVER = 'api.douban.com'
 API_KEY = '08ddb388b20b31581a991a9a16219408'
 SECRET = 'a3ef59aefaa9b85e'
@@ -92,6 +98,66 @@ def QueryUserBooks(handler, name):
         
     doRender(handler, 'showuser.html', {'books': books, 'user': owner});
 
+def QueryProgress(handler, bkey):
+    book = db.get(bkey)
+    ups = book.updatepoint_set
+    ups.order('date')
+
+    date = ups[0].date
+    oneday = datetime.timedelta(days=1)
+    data = [ups[0].page]
+    label = [str(date.day)]
+    for (i, up) in enumerate(ups):
+        if i == 0: continue
+        days = (up.date - ups[i-1].date).days
+        pages = up.page - ups[i-1].page
+        ppd = pages / (days + 0.0)
+        for j in range(days):
+            date += oneday
+            if date.weekday() == 0: # only records sunday
+                if date.day < 7:
+                    label.append(str(date.month))
+                else:
+                    label.append('.')
+            if j != days - 1:
+                data.append(int(j*ppd + ups[i-1].page))
+            else:
+                data.append(up.page)
+        logging.info('%s(%d): %s' % (up.date, days, data))
+
+    max_y = book.pages
+
+    chart = SimpleLineChart(600, 320, y_range=[0, max_y])
+
+    # data = [
+    #     32, 34, 34, 32, 34, 34, 32, 32, 32, 34, 34, 32, 29, 29, 34, 34, 34, 37,
+    #     37, 39, 42, 47, 50, 54, 57, 60, 60, 60, 60, 60, 60, 60, 62, 62, 60, 55,
+    #     55, 52, 47, 44, 44, 40, 40, 37, 34, 34, 32, 32, 32, 31, 32
+    #     ]
+    chart.add_data(data)
+    
+    # Set the line colour to blue
+    chart.set_colours(['0000FF'])
+    
+    # Set the vertical stripes
+    chart.fill_linear_stripes(Chart.CHART, 0, 'CCCCCC', 0.2, 'FFFFFF', 0.2)
+    
+    # Set the horizontal dotted lines
+    chart.set_grid(0, 25, 5, 5)
+
+    # The Y axis labels contains 0 to 100 skipping every 25, but remove the
+    # first number because it's obvious and gets in the way of the first X
+    # label.
+    left_axis = range(0, max_y + 1, ((max_y / 8) / 50 + 1) * 50)
+    left_axis[0] = ''
+    chart.set_axis_labels(Axis.LEFT, left_axis)
+    
+    # X axis labels
+    chart.set_axis_labels(Axis.BOTTOM, label)
+
+    doRender(handler, 'progress.html', {'book': book, 'imgurl': chart.get_url()})
+        
+    
 def QueryUser(name):
     user = db.GqlQuery("SELECT * FROM UserInfo where uid='%s'"%name)
 
@@ -100,6 +166,7 @@ def QueryUser(name):
         logging.info("Query result: Empty\n")
 
     return user.get()
+
 if __name__ == '__main__':
     books = client.GetMyCollection(url='/people/zellux/collection', cat='book', tag='', status='reading', max_results=50)
     # pickle.dump(books, open('mybooks.pickle', 'w'))

@@ -9,7 +9,7 @@ from renderer import *
 import logging
 import datetime
 
-def randomProgress(handler, bkey):
+def RandomProgress(handler, bkey):
     try:
         book = db.get(bkey)
     except:
@@ -21,7 +21,7 @@ def randomProgress(handler, bkey):
     date = datetime.date(2008, r.randint(1, 12), r.randint(1,28))
     delta = datetime.timedelta(days=1)
     page = 0
-    for i in range(r.randint(10, 30)):
+    for i in range(r.randint(30, 120)):
         date = date + delta
         if r.randint(0, 1) == 0:
             pass

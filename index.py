@@ -31,7 +31,15 @@ class ShowUser(webapp.RequestHandler):
 class TestRandomProgress(webapp.RequestHandler):
     def post(self):
         book = self.request.get('book')
-        randomProgress(self, book)
+        RandomProgress(self, book)
+
+    def get(self):
+        self.post()
+        
+class ShowProgress(webapp.RequestHandler):
+    def post(self):
+        book = self.request.get('book')
+        QueryProgress(self, book)
 
     def get(self):
         self.post()
@@ -41,6 +49,7 @@ application = webapp.WSGIApplication(
      ('/addUser', AddUser),
      ('/showUser', ShowUser),
      ('/randomProgress', TestRandomProgress),
+     ('/showProgress', ShowProgress),
      ],
     debug=True)
 
