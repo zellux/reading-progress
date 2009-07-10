@@ -127,3 +127,10 @@ a.prev, a.next {
     margin-right: auto;
 }
 
+#my_chart {
+	display:block;
+	/* border:1px solid; */
+    width: 646px; 
+	height: 300px;
+	margin-left: 37px;
+}
