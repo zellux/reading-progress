@@ -71,7 +71,7 @@ def ShowChartByOFC(handler, data, book, ups):
     steps = 86400 * 7
     datajson['title']['text'] = book.title
     datajson['x_axis']['min'] = TimeToInt(ups[0].date)
-    datajson['x_axis']['max'] = TimeToInt(ups[ups.count()-1].date)
+    datajson['x_axis']['max'] = TimeToInt(ups[len(ups)-1].date)
     datajson['x_axis']['steps'] = datajson['x_axis']['labels']['steps'] = steps
     datajson['x_axis']['labels']['visible-steps'] = 1,
     
@@ -109,7 +109,7 @@ def JsonSample():
     "max": 1233360000,
     "steps": 86400,
     "labels": {
-      "text": "#date:jS, M Y#",
+      "text": "#date:jS M#",
       "steps": 86400,
       "visible-steps": 2,
       "rotate": 90

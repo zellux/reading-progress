@@ -6,7 +6,7 @@ from google.appengine.api import memcache
 import douban, douban.service
 import pickle, re
 import logging
-import datetime, simplejson as json
+import datetime, simplejson as json, timeit, time
 
 from renderer import *
 from chart import ShowChart
@@ -110,20 +110,23 @@ def FetchOFCData(handler, bkey):
 
     # TODO: refresh memcache when update progress
     datajson = memcache.get('ofc.' + bkey)
+    datajson = None
     if datajson:
         logging.info('ofc cache hits.')
         handler.response.out.write(json.dumps(datajson))
         return
-        
+
     book = db.get(bkey)
-    ups = book.updatepoint_set
-    ups.order('date')
+    q = book.updatepoint_set
+    q.order('date')
+    ups = q.fetch(1000)
 
     data = [ups[0].page]
     for (i, up) in enumerate(ups):
         if i == 0: continue
         days = (up.date - ups[i-1].date).days
         pages = up.page - ups[i-1].page
+        
         ppd = pages / (days + 0.0)
         for j in range(days):
             if j != days - 1:
