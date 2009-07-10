@@ -10,9 +10,6 @@
   }
 </script>
 
-<div id="my_chart">
-</div>
-
 <!-- navigator -->
 <div class="navi"></div>
 
@@ -28,7 +25,6 @@
       <div class="option">修改进度</div>
       <div class="option"><a href="/randomProgress?book={{ book.key }}">随机进度生成</a></div>
       <div class="option"><a href="/showProgress?book={{ book.key }}">查看进度</a></div>
-      <div class="option"><a href="javascript: showChart('/getOFCData?key={{ book.key }}')">查看进度</a></div>
       <span class="blue">{{ book.done }} / {{ book.pages }}</span>
     </div>
   {% endfor %}
@@ -39,6 +35,8 @@
 <a class="next"></a>
 
 <br clear="all" />
+<div id="my_chart" style="display:block; border:1px solid; height: 300px; width: 550px;">dd</div>
+
 
 <script>
   
@@ -60,5 +58,4 @@ $(function() {
 }); 
 </script>
 
-<div id="my_chart" styles="display:block; border:1px solid; height: 300px; width: 550px;">dd</div>
 {% endblock %}
