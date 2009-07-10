@@ -109,7 +109,7 @@ a.prev, a.next {
     cursor:default;
 }
 
-#thumbs h3, #thumbs div.option, #thumbs span {
+#thumbs h3, #thumbs div.option div, #thumbs span {
     margin:13px;
     font-family:"bitstream vera sans";
     font-size:13px;
@@ -121,10 +121,22 @@ a.prev, a.next {
     color:yellow;
 }
 
+#thumbs h3 {
+	height: 25px;
+}
+
+#thumbs div.bookitem div.cover {
+	height: 100px;
+}
+
 #thumbs div.bookitem div.cover img {
     display: block;
     margin-left: auto;
     margin-right: auto;
+}
+
+#thumbs div.option {
+	height: 100px;
 }
 
 #my_chart {

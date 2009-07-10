@@ -76,7 +76,7 @@ def ShowChartByOFC(handler, data, book, ups):
     datajson['x_axis']['labels']['visible-steps'] = 1,
     
     datajson['y_axis']['min'] = 0
-    datajson['y_axis']['max'] = book.pages / 50 * 50
+    datajson['y_axis']['max'] = (book.pages / 50 + 1) * 50
     datajson['y_axis']['steps'] = 50
     handler.response.out.write(json.dumps(datajson))
     return datajson

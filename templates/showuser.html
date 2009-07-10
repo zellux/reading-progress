@@ -28,11 +28,12 @@
     <div class="bookitem" id="{{ book.key }}">
       <div class="cover"><img src="{{ book.img }}" /></div>
       <h3><em>{{ forloop.counter }}.</em>{{ book.title }}</h3>
-      <div class="option">修改进度</div>
-      <div class="option"><a href="/randomProgress?book={{ book.key }}">随机进度生成</a></div>
-      <div class="option"><a href="/showProgress?book={{ book.key }}">查看进度</a></div>
-      <div class="blue">{{ book.done }} / {{ book.pages }}</div>
-	  <div id="pbar{{ forloop.counter }}" class="progressBar">75%</div>
+      <div class="option">
+		<div>修改进度</div>
+		<div><a href="/randomProgress?book={{ book.key }}">随机进度生成</a></div>
+		<div><a href="/showProgress?book={{ book.key }}">查看进度</a></div>
+	  </div>
+	  <div id="pbar{{ forloop.counter }}" class="progressBar">{{ book.done }}/{{ book.pages }}</div>
     </div>
   {% endfor %}
   </div>
@@ -48,7 +49,7 @@
 <script>
 $(document).ready(function() {
 {% for book in books %}
-$("#pbar{{ forloop.counter }}").progressBar();
+$("#pbar{{ forloop.counter }}").progressBar({{ book.done }} / {{ book.pages }} * 100);
 {% endfor %}
 });
 

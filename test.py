@@ -35,4 +35,8 @@ def RandomProgress(handler, bkey):
             db.put(up)
             page += r.randint(0, 10)
             logging.info(page)
-            
+
+    book.done = book.pages if book.pages < page else page
+    db.put(book)
+
+    
