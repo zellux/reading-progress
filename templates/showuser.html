@@ -1,5 +1,11 @@
 {% extends "base.html" %}
+{% block header %}
+<script type="text/javascript" src="js/swfobject.js"></script>
+<script type="text/javascript" src="js/jquery.progressbar.min.js"></script>
+{% endblock %}
+
 {% block title %}{{ user.uname }} 的书籍{% endblock %}
+
 {% block bodycontent %}
 <script type="text/javascript">
   function showChart(url) {
@@ -25,7 +31,8 @@
       <div class="option">修改进度</div>
       <div class="option"><a href="/randomProgress?book={{ book.key }}">随机进度生成</a></div>
       <div class="option"><a href="/showProgress?book={{ book.key }}">查看进度</a></div>
-      <span class="blue">{{ book.done }} / {{ book.pages }}</span>
+      <div class="blue">{{ book.done }} / {{ book.pages }}</div>
+	  <div id="pbar{{ forloop.counter }}" class="progressBar">75%</div>
     </div>
   {% endfor %}
   </div>
@@ -39,7 +46,13 @@
 
 
 <script>
-  
+$(document).ready(function() {
+{% for book in books %}
+$("#pbar{{ forloop.counter }}").progressBar();
+{% endfor %}
+});
+
+
 // execute your scripts when DOM is ready. this is a good habit 
 $(function() {         
          
