@@ -58,7 +58,6 @@ def ShowChartByGoogle(handler, data, book, ups):
             'method': 'google'})
 
 def ShowChartByOFC(handler, data, book, ups):
-    fname = os.path.join(os.path.dirname(__file__), 'swf/test.json')
     datajson = json.loads(JsonSample())
     values = datajson['elements'][0]['values']
 
@@ -80,6 +79,7 @@ def ShowChartByOFC(handler, data, book, ups):
     datajson['y_axis']['max'] = book.pages / 50 * 50
     datajson['y_axis']['steps'] = 50
     handler.response.out.write(json.dumps(datajson))
+    return datajson
 
 ShowChart = ShowChartByOFC
 

@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 
 from google.appengine.ext import db
+from google.appengine.api import memcache
+
 import douban, douban.service
 import pickle, re
 import logging
-import datetime
+import datetime, simplejson as json
 
 from renderer import *
 from chart import ShowChart
@@ -104,6 +106,15 @@ def QueryProgress(handler, bkey):
             'method': 'OFC'})
     
 def FetchOFCData(handler, bkey):
+    bkey = bkey.strip()
+
+    # TODO: refresh memcache when update progress
+    datajson = memcache.get('ofc.' + bkey)
+    if datajson:
+        logging.info('ofc cache hits.')
+        handler.response.out.write(json.dumps(datajson))
+        return
+        
     book = db.get(bkey)
     ups = book.updatepoint_set
     ups.order('date')
@@ -120,8 +131,8 @@ def FetchOFCData(handler, bkey):
             else:
                 data.append(up.page)
                 
-    ShowChart(handler, data, book, ups)
-    
+    datajson = ShowChart(handler, data, book, ups)
+    memcache.add('ofc.' + bkey, datajson)
     
 def QueryUser(name):
     user = db.GqlQuery("SELECT * FROM UserInfo where uid='%s'"%name)
