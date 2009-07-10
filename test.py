@@ -17,6 +17,11 @@ def RandomProgress(handler, bkey):
         doRender(handler, 'error.html', {'errormsg': '找不到这本书的信息'});
         return
 
+    if book.updatepoint_set.count() > 0:
+        doRender(handler, 'error.html',
+                 {'errormsg': '该书测试数据已经存在，取消本次操作'});
+        return
+
     import random as r
     date = datetime.date(2008, r.randint(1, 12), r.randint(1,28))
     delta = datetime.timedelta(days=1)
@@ -29,4 +34,5 @@ def RandomProgress(handler, bkey):
             up = UpdatePoint(book=book, date=date, page=page)
             db.put(up)
             page += r.randint(0, 10)
+            logging.info(page)
             

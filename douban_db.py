@@ -123,6 +123,7 @@ def FetchOFCData(handler, bkey):
 
     data = [ups[0].page]
     for (i, up) in enumerate(ups):
+        logging.info(up.book.title + ' ' + str(up.date) + ' ' + str(up.page))
         if i == 0: continue
         days = (up.date - ups[i-1].date).days
         pages = up.page - ups[i-1].page
