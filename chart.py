@@ -82,10 +82,11 @@ def ShowChartByOFC(handler, data, book, ups):
     datajson['x_axis']['max'] = TimeToInt(ups[len(ups)-1].date)
     datajson['x_axis']['steps'] = datajson['x_axis']['labels']['steps'] = steps
     datajson['x_axis']['labels']['visible-steps'] = 1,
-    
+
+    slice = ((book.pages - 1) / 8 / 50 + 1) * 50
     datajson['y_axis']['min'] = 0
-    datajson['y_axis']['max'] = (book.pages / 50 + 1) * 50
-    datajson['y_axis']['steps'] = 50
+    datajson['y_axis']['max'] = (book.pages / slice + 1) * slice
+    datajson['y_axis']['steps'] = slice
     handler.response.out.write(json.dumps(datajson, indent=4))
     return datajson
 
