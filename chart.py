@@ -63,11 +63,19 @@ def ShowChartByOFC(handler, data, book, ups):
 
     oneday = datetime.timedelta(days=1)
     date = ups[0].date
-    for i, y in enumerate(data):
-        if i % 7 == 0:
-            values.append({'x': TimeToInt(date), 'y': y})
-        date += oneday
+    # for i, y in enumerate(data):
+    #     if i % 7 == 0:
+    #         values.append({'x': TimeToInt(date), 'y': y})
+    #     date += oneday
 
+    for y in data:
+        if y >= 0:
+            values.append({'x': TimeToInt(date), 'y': y})
+        else:
+            values.append(None)
+
+        date += oneday
+        
     steps = 86400 * 7
     datajson['title']['text'] = book.title
     datajson['x_axis']['min'] = TimeToInt(ups[0].date)
@@ -78,7 +86,7 @@ def ShowChartByOFC(handler, data, book, ups):
     datajson['y_axis']['min'] = 0
     datajson['y_axis']['max'] = (book.pages / 50 + 1) * 50
     datajson['y_axis']['steps'] = 50
-    handler.response.out.write(json.dumps(datajson))
+    handler.response.out.write(json.dumps(datajson, indent=4))
     return datajson
 
 ShowChart = ShowChartByOFC
@@ -88,15 +96,15 @@ def JsonSample():
 {
   "elements": [
     {
-      "type": "scatter_line",
+      "type": "line",
       "colour": "#DB1750",
       "width": 3,
       "values": [
       ],
       "dot-style": {
         "type": "hollow-dot",
-        "dot-size": 3,
-        "halo-size": 2,
+        "dot-size": 4,
+        "halo-size": 0,
         "tip": "#date:d M y#<br>Value: #val#"
       }
     }

@@ -12,7 +12,7 @@
   swfobject.embedSWF(
   "swf/OFC.swf", "my_chart",
   "550", "300", "9.0.0", "swf/expressInstall.swf",
-  {"data-file":url} );
+  {"data-file":url, "loading":"图表生成中..."});
   }
 </script>
 
@@ -30,8 +30,8 @@
       <h3><em>{{ forloop.counter }}.</em>{{ book.title }}</h3>
       <div class="option">
 		<div>修改进度</div>
-		<div><a href="/randomProgress?book={{ book.key }}">随机进度生成</a></div>
-		<div><a href="/showProgress?book={{ book.key }}">查看进度</a></div>
+		<!-- <div><a href="/randomProgress?book={{ book.key }}">随机进度生成</a></div> -->
+		<!-- <div><a href="/showProgress?book={{ book.key }}">查看进度</a></div> -->
 	  </div>
 	  <div id="pbar{{ forloop.counter }}" class="progressBar"></div>
     </div>

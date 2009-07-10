@@ -123,7 +123,6 @@ def FetchOFCData(handler, bkey):
 
     data = [ups[0].page]
     for (i, up) in enumerate(ups):
-        logging.info(up.book.title + ' ' + str(up.date) + ' ' + str(up.page))
         if i == 0: continue
         days = (up.date - ups[i-1].date).days
         pages = up.page - ups[i-1].page
@@ -131,7 +130,8 @@ def FetchOFCData(handler, bkey):
         ppd = pages / (days + 0.0)
         for j in range(days):
             if j != days - 1:
-                data.append(int(j*ppd + ups[i-1].page))
+                # data.append(int(j*ppd + ups[i-1].page))
+                data.append(-1)
             else:
                 data.append(up.page)
                 

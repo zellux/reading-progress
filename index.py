@@ -8,7 +8,7 @@ from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
 
 from douban_db import *
-from test import *
+from test_db import RandomProgress
 from renderer import *
 
 class MainPage(webapp.RequestHandler):
