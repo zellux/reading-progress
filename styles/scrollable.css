@@ -146,3 +146,15 @@ a.prev, a.next {
 	height: 300px;
 	margin-left: 37px;
 }
+
+#thumbs div.progressBar {
+	width: 140px;
+	text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#thumbs div.progressBar img {
+	border: 1px solid;
+}
+

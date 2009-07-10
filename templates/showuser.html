@@ -33,7 +33,7 @@
 		<div><a href="/randomProgress?book={{ book.key }}">随机进度生成</a></div>
 		<div><a href="/showProgress?book={{ book.key }}">查看进度</a></div>
 	  </div>
-	  <div id="pbar{{ forloop.counter }}" class="progressBar">{{ book.done }}/{{ book.pages }}</div>
+	  <div id="pbar{{ forloop.counter }}" class="progressBar"></div>
     </div>
   {% endfor %}
   </div>
@@ -49,7 +49,12 @@
 <script>
 $(document).ready(function() {
 {% for book in books %}
-$("#pbar{{ forloop.counter }}").progressBar({{ book.done }} / {{ book.pages }} * 100);
+ $("#pbar{{ forloop.counter }}").progressBar({{ book.done }},{
+max: {{ book.pages }},
+textFormat: 'fraction',
+boxImage:'/img/pbar/progressbar.gif',
+barImage:{0:'/img/pbar/progressbg_red.gif',{% widthratio book.pages 10 3 %}:'/img/pbar/progressbg_orange.gif',{% widthratio book.pages 10 7 %}:'/img/pbar/progressbg_green.gif'}
+});
 {% endfor %}
 });
 
