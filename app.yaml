@@ -10,5 +10,7 @@ handlers:
   static_dir: js
 - url: /img
   static_dir: img
+- url: /swf
+  static_dir: swf
 - url: /.*
   script: index.py

@@ -10,7 +10,7 @@ indexes:
 # automatically uploaded to the admin console when you next deploy
 # your application using appcfg.py.
 
-# Used 921 times in query history.
+# Used 10122 times in query history.
 - kind: UpdatePoint
   properties:
   - name: book

@@ -1,5 +1,24 @@
 {% extends "base.html" %}
 {% block title %}《{{ book.title }}》的阅读进度{% endblock %}
 {% block bodycontent %}
+
+{% ifequal method "google" %}
 <img src="{{ imgurl }}" />
+{% endifequal %}
+
+{% ifequal method "OFC" %}
+<script type="text/javascript">
+  
+  swfobject.embedSWF(
+  "swf/OFC.swf", "my_chart",
+  "550", "300", "9.0.0", "swf/expressInstall.swf",
+  {"data-file":"{{ dataurl }}"} );
+
+</script>
+
+<div id="my_chart">
+</div>
+
+{% endifequal %}
+
 {% endblock %}

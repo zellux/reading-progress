@@ -44,12 +44,21 @@ class ShowProgress(webapp.RequestHandler):
     def get(self):
         self.post()
         
+class ShowOFCData(webapp.RequestHandler):
+    def post(self):
+        book = self.request.get('key')
+        FetchOFCData(self, book)
+
+    def get(self):
+        self.post()
+        
 application = webapp.WSGIApplication(
     [('/', MainPage),
      ('/addUser', AddUser),
      ('/showUser', ShowUser),
      ('/randomProgress', TestRandomProgress),
      ('/showProgress', ShowProgress),
+     ('/getOFCData', ShowOFCData),
      ],
     debug=True)
 
