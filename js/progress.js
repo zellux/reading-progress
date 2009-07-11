@@ -8,7 +8,7 @@ function hideForm() {
 function showForm(bkey) {
     var divFrame = $("#addProgress");
     divFrame.css("display", "block");
-    expose = divFrame.expose({api: true,});
+    expose = divFrame.expose({api: true, maskId: "exposeMask"});
     expose.onBeforeClose(hideForm).load();
     var d = new Date();
     $("#updateDay").attr("value", "" + d.getFullYear() + "-" + d.getMonth() + "-" + d.getDate());
