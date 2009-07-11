@@ -151,6 +151,37 @@ def QueryUser(name):
 
     return user.get()
 
+def UpdateRecord(handler, bkey, datestr, pagestr):
+    logging.info("Update: %s %s %s"%(bkey, datestr, pagestr))
+    try:
+	book = db.get(bkey)
+    except Exception, e:
+	handler.response.out.write('无法获得图书信息')
+	logging.info(e)
+	return
+
+    try:
+	t = time.strptime(datestr, '%Y-%m-%d')
+	date = datetime.date.fromtimestamp(time.mktime(t))
+    except:
+	handler.response.out.write('日期格式错误')
+	return
+
+    try:
+	page = int(pagestr)
+	# TODO: page > book.pages
+    except:
+	handler.response.out.write('页码错误')
+	return
+
+    try:
+	up = UpdatePoint(book=book, date=date, page=page)
+	db.put(up)
+	handler.response.out.write('更新成功')
+    except Exception, e:
+	handler.response.out.write('更新出错')
+	logging.info(e)
+    
 if __name__ == '__main__':
     books = client.GetMyCollection(url='/people/zellux/collection', cat='book', tag='', status='reading', max_results=50)
     # pickle.dump(books, open('mybooks.pickle', 'w'))

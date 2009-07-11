@@ -34,7 +34,6 @@ def RandomProgress(handler, bkey):
             up = UpdatePoint(book=book, date=date, page=page)
             db.put(up)
             page += r.randint(0, 10)
-            logging.info(page)
 
     book.done = book.pages if book.pages < page else page
     db.put(book)

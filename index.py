@@ -51,7 +51,17 @@ class ShowOFCData(webapp.RequestHandler):
 
     def get(self):
         self.post()
-        
+
+class AjaxUpdateRecord(webapp.RequestHandler):
+    def pose(self):
+	date = self.request.get('date')
+	bkey = self.request.get('key')
+	page = self.request.get('page')
+	UpdateRecord(self, bkey, date, page)
+
+    def get(self):
+	self.pose()
+
 application = webapp.WSGIApplication(
     [('/', MainPage),
      ('/addUser', AddUser),
@@ -59,6 +69,7 @@ application = webapp.WSGIApplication(
      ('/randomProgress', TestRandomProgress),
      ('/showProgress', ShowProgress),
      ('/getOFCData', ShowOFCData),
+     ('/updateRecord', AjaxUpdateRecord)
      ],
     debug=True)
 

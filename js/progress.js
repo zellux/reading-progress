@@ -1,5 +1,11 @@
 var expose;
 var scroll;
+var formkey;
+
+function updateStatus(text) {
+    var ut = $("#updateTitle");
+    ut.html("阅读记录更新：<span style=\"color: #f00;\">"+text+"</span>");
+}
 
 function hideForm() {
     var divFrame = $("#addProgress");
@@ -7,6 +13,7 @@ function hideForm() {
 }
 
 function showForm(bkey) {
+    formkey = bkey;
     var divFrame = $("#addProgress");
     $("#updateDay").attr("value", "");
     divFrame.css("display", "block");
@@ -24,8 +31,24 @@ function showForm(bkey) {
 }
 
 function updateRecord(date, page) {
-    alert("更新记录" + date + ":" + page);
-    expose.close();
+    // alert("更新记录 Date="+date+" Page="+page+" Key="+formkey);
+    updateStatus("更新数据中。。");
+    $.ajax({
+	url: "/updateRecord?key="+formkey+"&date="+date+"&page="+page,
+	cache: false,
+	timeout: 5000,
+	error: function(html) {
+	    updateStatus("连接错误");
+	},
+	success: function(html) {
+	    updateStatus(html);
+	    // if (html = "success")
+	    // 	updateStatus("更新成功");
+	    // else
+	    // 	updateStatus("更新失败-"+html);
+ 	}
+    });
+    // setTimeOut('expose.close()', 1500);
 }
 function initHandlers() {
     // initialize scrollable
@@ -56,4 +79,5 @@ function initHandlers() {
 	var page = $("#updatePage").attr("value");
 	updateRecord(date, page);
     });
+
 }
