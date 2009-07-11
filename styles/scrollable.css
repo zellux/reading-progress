@@ -6,9 +6,9 @@ div.scrollable {
 /* prev, next, prevPage and nextPage buttons */
 a.prev, a.next, a.prevPage, a.nextPage {
     display:block;
-    width:18px;
-    height:18px;
-    background:url(../img/arrow/left.png) no-repeat;
+    width:27px;
+    height:27px;
+    background:url(../img/arrow/left-1.5.png) no-repeat;
     float:left;
     margin:43px 10px;
     cursor:pointer;
@@ -16,7 +16,7 @@ a.prev, a.next, a.prevPage, a.nextPage {
 
 /* mouseover state */
 a.prev:hover, a.next:hover, a.prevPage:hover, a.nextPage:hover {
-    background-position:0px -18px;
+    background-position:0px -27px;
 }
 
 /* disabled navigational button */
@@ -26,7 +26,7 @@ a.disabled {
 
 /* next button uses another background image */
 a.next, a.nextPage {
-    background-image:url(../img/arrow/right.png);
+    background-image:url(../img/arrow/right-1.5.png);
     clear:right;
 }
 

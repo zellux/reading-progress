@@ -23,6 +23,7 @@
 <div id="middle">
   <div id="addProgress">
     <div id="updateTitle">阅读记录更新</div>
+    <div id="updateCover"><img src="" /></div>
     <div id="updateInfo">我在<input id="updateDay" />看到了第<input id="updatePage" />页</div>
     <div id="updateSubmit">提交</div>
   </div>
@@ -56,7 +57,9 @@
   <a class="next"></a>
 
   <br clear="all" />
-  <div id="my_chart"></div>
+  <div styles="z-index: -1;">
+    <div id="my_chart" styles="z-index: -1;"></div>
+  </div>
 </div> <!-- mainContainer -->
 
 <script>

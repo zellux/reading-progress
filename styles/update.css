@@ -2,11 +2,16 @@
     display: none;
     margin-left: auto;
     margin-right: auto;
-    padding: 10px;
-    width: 220px;
+    padding: 15px;
+    width: 282px;
+    height: 192px;
     font-size: 14px;
     color: #000;
-    background-color: #eee;
+    background: url(../img/popup_bg.png) no-repeat;
+}
+
+#addProgress input {
+    margin-top: 10px;
 }
 
 #middle {
@@ -15,30 +20,43 @@
     z-index: 10000;
     display: block;
     width: 100%;
-    top: 200px;
+    top: 120px;
     left: 0px;
-}
-
-#addProgress div {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
 }
 
 #updateTitle {
     text-align: left;
+    font-size: 17px;
     font-weight: bold;
-    margin-bottom: 20px;
+    padding: 10px;
+}
+
+#updateCover {
+    position: relative;
+    top: 10px;
+    left: 20px;
+    display: inline;
+    width: 80px;
+    float: left:
 }
 
 #updateInfo {
-    width: 220px;
-    margin-bottom: 40px;
+    position: relative;
+    top: 10px;
+    left: -45px;
+    display: inline;
+    float: right;
+    width: 120px;
 }
 
 #updateSubmit {
+    display: block;
+    position: relative;
+    left: -45px;
     text-align: center;
     width: 120px;
+    /* clear: both; */
+    float: right;
 }
 
 #updateSubmit:hover {
