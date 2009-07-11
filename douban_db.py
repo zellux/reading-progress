@@ -95,7 +95,7 @@ def QueryUserBooks(handler, name):
     if books.count() == 0:
         logging.info("Query result: Empty\n")
         
-    doRender(handler, 'showuser.html', {'books': books, 'user': owner});
+    doRender(handler, 'showuser.html', {'books': books.fetch(1000), 'user': owner});
 
 def QueryProgress(handler, bkey):
     book = db.get(bkey)
@@ -118,6 +118,10 @@ def FetchOFCData(handler, bkey):
 
     book = db.get(bkey)
     q = book.updatepoint_set
+
+    if q.count() == 0:
+        datajson = ShowChart(handler, [], book, [])
+        return
     q.order('date')
     ups = q.fetch(1000)
 

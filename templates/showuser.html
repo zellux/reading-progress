@@ -1,7 +1,11 @@
 {% extends "base.html" %}
 {% block header %}
+<link href="styles/scrollable.css" rel="stylesheet" type="text/css" />
+<link href="styles/update.css" rel="stylesheet" type="text/css" />
+
 <script type="text/javascript" src="js/swfobject.js"></script>
 <script type="text/javascript" src="js/jquery.progressbar.min.js"></script>
+<script type="text/javascript" src="js/progress.js"></script>
 {% endblock %}
 
 {% block title %}{{ user.uname }} 的书籍{% endblock %}
@@ -16,64 +20,62 @@
   }
 </script>
 
-<!-- navigator -->
-<div class="navi"></div>
-
-<!-- prev link -->
-<a class="prev"></a>
-
-<div class="scrollable">
-  <div id="thumbs">
-    {% for book in books %}
-    <div class="bookitem" id="{{ book.key }}">
-      <div class="cover"><img src="{{ book.img }}" /></div>
-      <h3><em>{{ forloop.counter }}.</em>{{ book.title }}</h3>
-      <div class="option">
-		<div>修改进度</div>
-		<!-- <div><a href="/randomProgress?book={{ book.key }}">随机进度生成</a></div> -->
-		<!-- <div><a href="/showProgress?book={{ book.key }}">查看进度</a></div> -->
-	  </div>
-	  <div id="pbar{{ forloop.counter }}" class="progressBar"></div>
-    </div>
-  {% endfor %}
+<div id="middle">
+  <div id="addProgress">
+    <div id="updateTitle">阅读记录更新</div>
+    <div id="updateInfo">我在<input id="updateDay" />看到了第<input id="updatePage" />页</div>
+    <div id="updateSubmit">提交</div>
   </div>
 </div>
 
-<!-- next link -->
-<a class="next"></a>
+<div id="mainContainer">
+  <!-- navigator -->
+  <div class="navi"></div>
 
-<br clear="all" />
-<div id="my_chart"></div>
+  <!-- prev link -->
+  <a class="prev"></a>
 
+  <div class="scrollable">
+    <div id="thumbs">
+      {% for book in books %}
+      <div class="bookitem" id="{{ book.key }}">
+	<div class="cover"><img src="{{ book.img }}" /></div>
+	<h3><em>{{ forloop.counter }}.</em>{{ book.title }}</h3>
+	<div class="option">
+	  <div class="update">修改进度</div>
+	  <div><a href="/randomProgress?book={{ book.key }}">随机进度生成</a></div>
+	  <!-- <div><a href="/showProgress?book={{ book.key }}">查看进度</a></div> -->
+	</div>
+	<div id="pbar{{ forloop.counter }}" class="progressBar"></div>
+      </div>
+	  {% endfor %}
+	</div>
+  </div>
+
+  <!-- next link -->
+  <a class="next"></a>
+
+  <br clear="all" />
+  <div id="my_chart"></div>
+</div> <!-- mainContainer -->
 
 <script>
 $(document).ready(function() {
-{% for book in books %}
- $("#pbar{{ forloop.counter }}").progressBar({{ book.done }},{
-max: {{ book.pages }},
-textFormat: 'fraction',
-boxImage:'/img/pbar/progressbar.gif',
-barImage:{0:'/img/pbar/progressbg_red.gif',{% widthratio book.pages 10 3 %}:'/img/pbar/progressbg_orange.gif',{% widthratio book.pages 10 7 %}:'/img/pbar/progressbg_green.gif'}
+    {% for book in books %}
+    $("#pbar{{ forloop.counter }}").progressBar({{ book.done }}, {
+	max: {{ book.pages }},
+	textFormat: 'fraction',
+	boxImage: '/img/pbar/progressbar.gif',
+	barImage: {0:'/img/pbar/progressbg_red.gif',
+		   {% widthratio book.pages 10 3 %}:'/img/pbar/progressbg_orange.gif',
+		   {% widthratio book.pages 10 7 %}:'/img/pbar/progressbg_green.gif'}
+		   });
+    {% endfor %}
 });
-{% endfor %}
-});
-
 
 // execute your scripts when DOM is ready. this is a good habit 
 $(function() {         
-         
-    // initialize scrollable  
-    var api = $("div.scrollable").scrollable({
-        api: true,
-        size: 3, 
-        items: '#thumbs',   
-        hoverClass: 'hover' 
-    });
-
-    $("div.bookitem").click(function() {
-        bkey = $(this).attr("id");
-        showChart("/getOFCData?key=" + bkey);
-    });
+    initHandlers();
 }); 
 </script>
 

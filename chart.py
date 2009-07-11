@@ -97,16 +97,17 @@ def JsonSample():
 {
   "elements": [
     {
-      "type": "line",
+      "type": "scatter_line",
       "colour": "#DB1750",
-      "width": 3,
+      "width": 1,
       "values": [
       ],
       "dot-style": {
-        "type": "hollow-dot",
+        "type": "bow",
         "dot-size": 4,
         "halo-size": 0,
-        "tip": "#date:d M y#<br>Value: #val#"
+        "tip": "#date:d M y#<br>Value: #val#",
+        "rotation": 90
       }
     }
   ],

@@ -1,0 +1,57 @@
+#addProgress {
+    display: none;
+    margin-left: auto;
+    margin-right: auto;
+    width: 220px;
+    font-size: 14px;
+    color: #000;
+    background-color: #eee;
+}
+
+#middle {
+    position: fixed;
+    overflow: visible;
+    z-index: 10000;
+    display: block;
+    width: 100%;
+    top: 200px;
+    left: 0px;
+}
+
+#addProgress div {
+    display: block;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#updateTitle {
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+#updateInfo {
+    width: 220px;
+    margin-bottom: 40px;
+}
+
+#updateSubmit {
+    width: 120px;
+}
+
+#updateSubmit:hover {
+    cursor: pointer;
+    background-color: #DEAE31;
+}
+
+#addProgress input {
+
+}
+
+#updateDay {
+    width: 80px;
+}
+
+#updatePage {
+    width: 30px;
+}

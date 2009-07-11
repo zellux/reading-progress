@@ -72,7 +72,7 @@ div.scrollable {
 /* 
    root element for scrollable items. It is 
    absolutely positioned with large width. 
-*/
+   */
 #thumbs {
     position:absolute;
     width:20000em;
@@ -92,20 +92,20 @@ a.prev, a.next {
     width:214px;
     height:300px;
     /* background:#333 url(http://static.flowplayer.org/img/global/gradient/h150.png) repeat-x 0 146px; */
-    background: #333;
+    background: #066;
     color:#fff;
     border-left:1px solid #000;
-    cursor:pointer;
+/* cursor:pointer; */
 }
 
 /* style when mouse is over the item */
 #thumbs div.bookitem.hover {
-    background-color:#444;
+    background-color:#077;
 }
 
 /* style when element is active (clicked) */
 #thumbs div.bookitem.active {
-    background-color:#066;
+    background-color:#784016;
     cursor:default;
 }
 
@@ -122,11 +122,12 @@ a.prev, a.next {
 }
 
 #thumbs h3 {
-	height: 25px;
+    height: 25px;
 }
 
 #thumbs div.bookitem div.cover {
-	height: 100px;
+    height: 100px;
+    cursor: pointer;
 }
 
 #thumbs div.bookitem div.cover img {
@@ -136,25 +137,40 @@ a.prev, a.next {
 }
 
 #thumbs div.option {
-	height: 100px;
+    height: 100px;
 }
 
 #my_chart {
-	display:block;
-	/* border:1px solid; */
+    display:block;
+    /* border:1px solid; */
     width: 646px; 
-	height: 300px;
-	margin-left: 37px;
+    height: 300px;
+    margin-left: 37px;
 }
 
 #thumbs div.progressBar {
-	width: 140px;
-	text-align: center;
+    width: 140px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    cursor: pointer;
+}
+
+#thumbs div.progressBar img {
+    border: 1px solid;
+}
+
+div#mainContainer {
+    width: 750px;
     margin-left: auto;
     margin-right: auto;
 }
 
-#thumbs div.progressBar img {
-	border: 1px solid;
+#thumbs div.update {
+    cursor: pointer;
+    text-align: center;
 }
 
+#thumbs div.update:hover {
+    background-color: #529A39;
+}
