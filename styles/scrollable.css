@@ -65,8 +65,8 @@ div.navi a.active {
 div.scrollable {  
     position:relative;
     overflow:hidden;
-    width: 646px; 
-    height:300px;
+    width: 631px;
+    height: 221px;
 }
 
 /* 
@@ -82,15 +82,14 @@ div.scrollable {
 
 /* custom positioning for navigational links */
 a.prev, a.next {
-    margin-top:118px;
+    margin-top:100px;
 }
 
 
 /* single item */
 #thumbs div.bookitem {
     float:left;
-    width:214px;
-    height:300px;
+    width:156px;
     /* background:#333 url(http://static.flowplayer.org/img/global/gradient/h150.png) repeat-x 0 146px; */
     background: #066;
     color:#fff;
@@ -122,11 +121,11 @@ a.prev, a.next {
 }
 
 #thumbs h3 {
-    height: 25px;
+    height: 30px;
 }
 
 #thumbs div.bookitem div.cover {
-    height: 100px;
+    height: 90px;
     cursor: pointer;
 }
 
@@ -137,15 +136,18 @@ a.prev, a.next {
 }
 
 #thumbs div.option {
-    height: 100px;
+    text-align: left;
+    padding-left: 10px;
+    padding-right: 10px;
+    height: 30px;
 }
 
 #my_chart {
     display:block;
     /* border:1px solid; */
-    width: 646px; 
+    width: 631px; 
     height: 300px;
-    margin-left: 37px;
+    margin-left: 46px;
 }
 
 #thumbs div.progressBar {
@@ -164,9 +166,11 @@ div#mainContainer {
     width: 750px;
     margin-left: auto;
     margin-right: auto;
+    margin-top: 30px;
 }
 
 #thumbs div.update {
+    float: left;
     cursor: pointer;
     text-align: center;
 }

@@ -42,12 +42,12 @@
       <div class="bookitem" id="{{ book.key }}">
 	<div class="cover"><img src="{{ book.img }}" /></div>
 	<h3><em>{{ forloop.counter }}.</em>{{ book.title }}</h3>
+	<div id="pbar{{ forloop.counter }}" class="progressBar"></div>
 	<div class="option">
 	  <div class="update">修改进度</div>
 	  <!-- <div><a href="/randomProgress?book={{ book.key }}">随机进度生成</a></div> -->
 	  <!-- <div><a href="/showProgress?book={{ book.key }}">查看进度</a></div> -->
 	</div>
-	<div id="pbar{{ forloop.counter }}" class="progressBar"></div>
       </div>
 	  {% endfor %}
 	</div>

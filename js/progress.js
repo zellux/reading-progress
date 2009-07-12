@@ -54,7 +54,7 @@ function initHandlers() {
     // initialize scrollable
     scroll = $("div.scrollable").scrollable({
         api: true,
-        size: 3,
+        size: 4,
         items: '#thumbs',
         hoverClass: 'hover'
     });

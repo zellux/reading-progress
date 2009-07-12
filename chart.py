@@ -90,6 +90,19 @@ def ShowChartByOFC(handler, data, book, ups):
     handler.response.out.write(json.dumps(datajson, indent=4))
     return datajson
 
+def ShowEmptyChart(handler, book):
+    datajson = json.loads(JsonEmpty())
+
+    steps = 86400 * 7
+    datajson['title']['text'] = book.title
+
+    slice = ((book.pages - 1) / 8 / 50 + 1) * 50
+    datajson['y_axis']['min'] = 0
+    datajson['y_axis']['max'] = (book.pages / slice + 1) * slice
+    datajson['y_axis']['steps'] = slice
+    
+    handler.response.out.write(json.dumps(datajson, indent=4))
+    
 ShowChart = ShowChartByOFC
 
 def JsonSample():
@@ -132,3 +145,19 @@ def JsonSample():
   }
 }
 """
+
+def JsonEmpty():
+    return """
+{
+  "title": {
+    "text": "Empty chart"
+  },
+  "elements": [],
+  "y_axis": {
+    "min": 0,
+    "max": 15,
+    "steps": 5
+  },
+  "x_axis": { "tick-height": 10, "min": 1, "max": "30" }
+}
+    """

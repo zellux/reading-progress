@@ -9,7 +9,7 @@ import logging
 import datetime, simplejson as json, timeit, time
 
 from renderer import *
-from chart import ShowChart
+from chart import ShowChart, ShowEmptyChart
 
 
 SERVER = 'api.douban.com'
@@ -89,11 +89,16 @@ def UserRegister(handler, name):
 
 def QueryUserBooks(handler, name):
     owner = QueryUser(name)
+    if owner == None:
+	doRender(handler, 'error.html', {'errormsg': '用户不存在'});
+        return
+
     books = owner.bookstate_set
 
     logging.info("Query books of user %s\n"%name)
     if books.count() == 0:
         logging.info("Query result: Empty\n")
+	
         
     doRender(handler, 'showuser.html', {'books': books.fetch(1000), 'user': owner});
 
@@ -119,8 +124,8 @@ def FetchOFCData(handler, bkey):
     book = db.get(bkey)
     q = book.updatepoint_set
 
-    if q.count() == 0:
-        datajson = ShowChart(handler, [], book, [])
+    if q.count() <= 1:
+        datajson = ShowEmptyChart(handler, book)
         return
     q.order('date')
     ups = q.fetch(1000)
@@ -175,7 +180,17 @@ def UpdateRecord(handler, bkey, datestr, pagestr):
 	return
 
     try:
-	up = UpdatePoint(book=book, date=date, page=page)
+	q = UpdatePoint.all()
+	q.filter('date =', date)
+	q.filter('book =', book)
+	if q.count() == 0:
+	    up = UpdatePoint(book=book, date=date, page=page)
+	else:
+	    up = q.fetch(1)[0]
+	    up.page = page
+	if page > book.done:
+	    book.done = page
+	    db.put(book)
 	db.put(up)
 	handler.response.out.write('更新成功')
     except Exception, e:
