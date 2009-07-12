@@ -62,6 +62,14 @@ class AjaxUpdateRecord(webapp.RequestHandler):
     def get(self):
 	self.pose()
 
+class AjaxGetPage(webapp.RequestHandler):
+    def pose(self):
+	bkey = self.request.get('key')
+	GetPage(self, bkey)
+
+    def get(self):
+	self.pose()
+
 application = webapp.WSGIApplication(
     [('/', MainPage),
      ('/addUser', AddUser),
@@ -69,7 +77,8 @@ application = webapp.WSGIApplication(
      ('/randomProgress', TestRandomProgress),
      ('/showProgress', ShowProgress),
      ('/getOFCData', ShowOFCData),
-     ('/updateRecord', AjaxUpdateRecord)
+     ('/updateRecord', AjaxUpdateRecord),
+     ('/ajaxGetPage', AjaxGetPage)
      ],
     debug=True)
 

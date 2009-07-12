@@ -42,7 +42,7 @@
       <div class="bookitem" id="{{ book.key }}">
 	<div class="cover"><img src="{{ book.img }}" /></div>
 	<h3><em>{{ forloop.counter }}.</em>{{ book.title }}</h3>
-	<div id="pbar{{ forloop.counter }}" class="progressBar"></div>
+	<div id="pbar{{ forloop.counter }}" class="progressBar" total="{{ book.pages }}"></div>
 	<div class="option">
 	  <div class="update">修改进度</div>
 	  <!-- <div><a href="/randomProgress?book={{ book.key }}">随机进度生成</a></div> -->
@@ -65,14 +65,15 @@
 <script>
 $(document).ready(function() {
     {% for book in books %}
-    $("#pbar{{ forloop.counter }}").progressBar({{ book.done }}, {
-	max: {{ book.pages }},
-	textFormat: 'fraction',
-	boxImage: '/img/pbar/progressbar.gif',
-	barImage: {0:'/img/pbar/progressbg_red.gif',
-		   {% widthratio book.pages 10 3 %}:'/img/pbar/progressbg_orange.gif',
-		   {% widthratio book.pages 10 7 %}:'/img/pbar/progressbg_green.gif'}
-		   });
+    <!-- $("#pbar{{ forloop.counter }}").progressBar({{ book.done }}, { -->
+    <!-- 	max: {{ book.pages }}, -->
+    <!-- 	textFormat: 'fraction', -->
+    <!-- 	boxImage: '/img/pbar/progressbar.gif', -->
+    <!-- 	barImage: {0:'/img/pbar/progressbg_red.gif', -->
+    <!-- 		   {% widthratio book.pages 10 3 %}:'/img/pbar/progressbg_orange.gif', -->
+    <!-- 		   {% widthratio book.pages 10 7 %}:'/img/pbar/progressbg_green.gif'} -->
+    <!-- 		   }); -->
+    setBar($("#pbar{{ forloop.counter }}"), {{ book.done }}, {{ book.pages }});
     {% endfor %}
 });
 

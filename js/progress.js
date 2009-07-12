@@ -7,6 +7,34 @@ function updateStatus(text) {
     ut.html("阅读记录更新：<span style=\"color: #f00;\">"+text+"</span>");
 }
 
+function setBar(bar, cur, total) {
+    var v1 = parseInt(total * 0.3);
+    var v2 = parseInt(total * 0.7);
+
+    var barImageObj = {};
+    barImageObj[0] = '/img/pbar/progressbg_red.gif';
+    barImageObj[v1] = '/img/pbar/progressbg_orange.gif';
+    barImageObj[v2] = '/img/pbar/progressbg_green.gif';
+
+    bar.progressBar(cur, {
+	max: total,
+	textFormat: 'fraction',
+	boxImage: '/img/pbar/progressbar.gif',
+	barImage: barImageObj
+    });
+}
+
+function refreshBar() {
+    var bar = $("#"+formkey+" .progressBar");
+    $.ajax({
+	url: "/ajaxGetPage?key="+formkey,
+	cache: false,
+	timeout: 2000,
+	success: function(html) {
+	    setBar(bar, html, bar.attr("total"));
+ 	}
+    });
+}
 function hideForm() {
     var divFrame = $("#addProgress");
     divFrame.css("display", "none");
@@ -42,10 +70,7 @@ function updateRecord(date, page) {
 	},
 	success: function(html) {
 	    updateStatus(html);
-	    // if (html = "success")
-	    // 	updateStatus("更新成功");
-	    // else
-	    // 	updateStatus("更新失败-"+html);
+	    refreshBar();
  	}
     });
     // setTimeOut('expose.close()', 1500);

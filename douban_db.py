@@ -188,15 +188,33 @@ def UpdateRecord(handler, bkey, datestr, pagestr):
 	else:
 	    up = q.fetch(1)[0]
 	    up.page = page
-	if page > book.done:
-	    book.done = page
-	    db.put(book)
+
 	db.put(up)
+	
+	q = UpdatePoint.all()
+	q.filter('book =', book)
+	q.order('-date')
+	
+	book.done = q.fetch(1)[0].page
+	db.put(book)
 	handler.response.out.write('更新成功')
     except Exception, e:
 	handler.response.out.write('更新出错')
 	logging.info(e)
     
+def GetPage(handler, bkey):
+    try:
+	book = db.get(bkey)
+    except Exception, e:
+	handler.response.out.write('0')
+	logging.info(e)
+	return
+
+    if book.done > book.pages:
+	book.done = book.pages
+	db.put(book)
+    handler.response.out.write(book.done)
+
 if __name__ == '__main__':
     books = client.GetMyCollection(url='/people/zellux/collection', cat='book', tag='', status='reading', max_results=50)
     # pickle.dump(books, open('mybooks.pickle', 'w'))
