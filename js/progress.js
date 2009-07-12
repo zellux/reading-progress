@@ -2,6 +2,13 @@ var expose;
 var scroll;
 var formkey;
 
+function showChart(url) {
+    swfobject.embedSWF(
+	"swf/OFC.swf", "my_chart",
+	"631", "300", "9.0.0", "swf/expressInstall.swf",
+	{"data-file":url, "loading":"图表生成中..."});
+}
+
 function updateStatus(text) {
     var ut = $("#updateTitle");
     ut.html("阅读记录更新：<span style=\"color: #f00;\">"+text+"</span>");
@@ -85,6 +92,11 @@ function initHandlers() {
     });
 
     $("div.cover").click(function() {
+        bkey = $(this).parent().attr("id");
+        showChart("/getOFCData?key=" + bkey);
+    });
+
+    $("div.title").click(function() {
         bkey = $(this).parent().attr("id");
         showChart("/getOFCData?key=" + bkey);
     });

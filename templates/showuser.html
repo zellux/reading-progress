@@ -12,12 +12,6 @@
 
 {% block bodycontent %}
 <script type="text/javascript">
-  function showChart(url) {
-  swfobject.embedSWF(
-  "swf/OFC.swf", "my_chart",
-  "550", "300", "9.0.0", "swf/expressInstall.swf",
-  {"data-file":url, "loading":"图表生成中..."});
-  }
 </script>
 
 <div id="middle">
@@ -41,7 +35,7 @@
       {% for book in books %}
       <div class="bookitem" id="{{ book.key }}">
 	<div class="cover"><img src="{{ book.img }}" /></div>
-	<h3><em>{{ forloop.counter }}.</em>{{ book.title }}</h3>
+	<div class="title"><h3><em>{{ forloop.counter }}.</em>{{ book.title }}</h3></div>
 	<div id="pbar{{ forloop.counter }}" class="progressBar" total="{{ book.pages }}"></div>
 	<div class="option">
 	  <div class="update">修改进度</div>
@@ -57,7 +51,7 @@
   <a class="next"></a>
 
   <br clear="all" />
-  <div styles="z-index: -1;">
+  <div id="chartContainer">
     <div id="my_chart" styles="z-index: -1;"></div>
   </div>
 </div> <!-- mainContainer -->
@@ -65,14 +59,6 @@
 <script>
 $(document).ready(function() {
     {% for book in books %}
-    <!-- $("#pbar{{ forloop.counter }}").progressBar({{ book.done }}, { -->
-    <!-- 	max: {{ book.pages }}, -->
-    <!-- 	textFormat: 'fraction', -->
-    <!-- 	boxImage: '/img/pbar/progressbar.gif', -->
-    <!-- 	barImage: {0:'/img/pbar/progressbg_red.gif', -->
-    <!-- 		   {% widthratio book.pages 10 3 %}:'/img/pbar/progressbg_orange.gif', -->
-    <!-- 		   {% widthratio book.pages 10 7 %}:'/img/pbar/progressbg_green.gif'} -->
-    <!-- 		   }); -->
     setBar($("#pbar{{ forloop.counter }}"), {{ book.done }}, {{ book.pages }});
     {% endfor %}
 });

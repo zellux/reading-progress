@@ -47,31 +47,31 @@ div.navi a {
     height:8px;
     float:left;
     margin:3px;
-    background:url(../img/navigator.png) 0 0 no-repeat;     
+    background:url(../img/navigator.png) 0 0 no-repeat;
     cursor:pointer;
 }
 
 /* mouseover state */
 div.navi a:hover {
-    background-position:0 -8px;      
+    background-position:0 -8px;
 }
 
 /* active state (current page state) */
 div.navi a.active {
-    background-position:0 -16px;     
-} 
+    background-position:0-16px;
+}
 
 /* root element for the whole scrollable setup */
-div.scrollable {  
+div.scrollable {
     position:relative;
     overflow:hidden;
     width: 631px;
-    height: 221px;
+    height: 222px;
 }
 
-/* 
-   root element for scrollable items. It is 
-   absolutely positioned with large width. 
+/*
+   root element for scrollable items. It is
+   absolutely positioned with large width.
    */
 #thumbs {
     position:absolute;
@@ -91,7 +91,7 @@ a.prev, a.next {
     float:left;
     width:156px;
     /* background:#333 url(http://static.flowplayer.org/img/global/gradient/h150.png) repeat-x 0 146px; */
-    background: #066;
+    background: #FFF1E3;
     color:#fff;
     border-left:1px solid #000;
 /* cursor:pointer; */
@@ -99,12 +99,12 @@ a.prev, a.next {
 
 /* style when mouse is over the item */
 #thumbs div.bookitem.hover {
-    background-color:#077;
+    background-color:#9DB0E7;
 }
 
 /* style when element is active (clicked) */
 #thumbs div.bookitem.active {
-    background-color:#784016;
+    background-color:#E8F100;
     cursor:default;
 }
 
@@ -112,12 +112,16 @@ a.prev, a.next {
     margin:13px;
     font-family:"bitstream vera sans";
     font-size:13px;
-    color:#fff;
+    color:#000;
+}
+
+#thumbs div.title {
+    cursor:pointer;
 }
 
 #thumbs h3 em {
     font-style:normal;
-    color:yellow;
+
 }
 
 #thumbs h3 {
@@ -142,12 +146,15 @@ a.prev, a.next {
     height: 30px;
 }
 
-#my_chart {
-    display:block;
-    /* border:1px solid; */
-    width: 631px; 
+#chartContainer {
+    display: block;
+    width: 631px;
     height: 300px;
     margin-left: 46px;
+}
+
+#my_chart {
+    margin: auto;
 }
 
 #thumbs div.progressBar {
