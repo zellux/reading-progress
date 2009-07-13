@@ -96,10 +96,11 @@ def ShowEmptyChart(handler, book):
     steps = 86400 * 7
     datajson['title']['text'] = book.title
 
-    slice = ((book.pages - 1) / 8 / 50 + 1) * 50
-    datajson['y_axis']['min'] = 0
-    datajson['y_axis']['max'] = (book.pages / slice + 1) * slice
-    datajson['y_axis']['steps'] = slice
+    if book.pages > 0:
+	slice = ((book.pages - 1) / 8 / 50 + 1) * 50
+	datajson['y_axis']['min'] = 0
+	datajson['y_axis']['max'] = (book.pages / slice + 1) * slice
+	datajson['y_axis']['steps'] = slice
     
     handler.response.out.write(json.dumps(datajson, indent=4))
     

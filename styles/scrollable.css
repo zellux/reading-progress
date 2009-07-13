@@ -36,7 +36,7 @@ a.next, a.nextPage {
 
 /* position and dimensions of the navigator */
 div.navi {
-    margin-left:328px;
+    margin-left:350px;
     width:200px;
     height:20px;
 }
@@ -149,7 +149,7 @@ a.prev, a.next {
 #chartContainer {
     display: block;
     width: 631px;
-    height: 300px;
+    height: 290px;
     margin-left: 46px;
 }
 
@@ -183,5 +183,5 @@ div#mainContainer {
 }
 
 #thumbs div.update:hover {
-    background-color: #529A39;
+    background-color: #BBF657;
 }
