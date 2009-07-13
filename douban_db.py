@@ -29,6 +29,7 @@ class BookState(db.Model):
     pages = db.IntegerProperty(required=True)
     done  = db.IntegerProperty(required=True)
     img   = db.StringProperty()
+    hide  = db.BooleanProperty(default=False)
 
 class UpdatePoint(db.Model):
     book = db.ReferenceProperty(BookState)
@@ -87,6 +88,72 @@ def UserRegister(handler, name):
 
     doRender(handler, 'userinfo.html', {'books': books});
 
+def UserRefresh(handler, name):
+    name = name.strip()
+    q = db.Query(UserInfo)
+    q = q.filter('uid = ', name)
+    if q.count() == 0:
+        doRender(handler, 'error.html', {'errormsg': '用户不存在，请先登记'});
+        return
+    
+    user = q.fetch(limit=1)[0]
+    q = BookState.all()
+    q = q.filter('owner =', user)
+    oldbooks = q.fetch(1000)
+    oldtitles = {}
+    for b in oldbooks:
+	oldtitles[b.title] = [b, True]   # ref to book and whether hide
+    
+    books = client.GetMyCollection(
+        url='/people/%s/collection'%name,
+        cat='book',
+        tag='',
+        status='reading',
+        max_results=50)
+
+    uname = re.search('(.*) 的收藏', books.title.text)
+    if uname:
+        user.uname = unicode(uname.group(1), 'utf-8')
+    db.put(user)
+    
+    logging.info(books.title.text)
+    for b in books.entry:
+	title = unicode(b.subject.title.text.strip(), 'utf-8')
+	if title in oldtitles:
+	    bs = oldtitles[title]
+	    bs[1] = False
+	    continue
+
+	logging.info("Add new book[%s]."%title)
+        bs = BookState(
+            owner=user,
+            title=unicode(b.subject.title.text.strip(), 'utf-8'),
+            pages=0,
+            done=0
+            )
+        book = client.GetBook(b.subject.id.text)
+        for attr in book.attribute:
+            if attr.name == 'pages':
+                try:
+                    bs.pages = int(attr.text.split()[0])
+                except:
+                    logging.error('Error when fetching page number of book %s'%b.subject.id.text)
+
+        for link in b.subject.link:
+            if link.rel == 'image':
+                bs.img = link.href
+        db.put(bs)
+
+    for item in oldtitles.itervalues():
+	b = item[0]
+	hide = item[1]
+	if b.hide != hide:
+	    logging.info("[%s] hidden value is set to %s"%(b.title, hide))
+	    b.hide = hide
+	    db.put(b)
+	
+    doRender(handler, 'userinfo.html', {'books': books});
+
 def QueryUserBooks(handler, name):
     owner = QueryUser(name)
     if owner == None:
@@ -94,6 +161,7 @@ def QueryUserBooks(handler, name):
         return
 
     books = owner.bookstate_set
+    books.filter("hide ==", False)
 
     logging.info("Query books of user %s\n"%name)
     if books.count() == 0:
@@ -215,6 +283,12 @@ def GetPage(handler, bkey):
 	db.put(book)
     handler.response.out.write(book.done)
 
+def FixupBooks(handler):
+    q = BookState.all()
+    books = q.fetch(1000)
+    for b in books:
+	db.put(b)
+    
 if __name__ == '__main__':
     books = client.GetMyCollection(url='/people/zellux/collection', cat='book', tag='', status='reading', max_results=50)
     # pickle.dump(books, open('mybooks.pickle', 'w'))

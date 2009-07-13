@@ -3,7 +3,13 @@
 <form action="/addUser" method="post">
   <div><input type="text" name="user"><input type="submit" value="新增用户"></div>
 </form>
+<form action="/updateUser" method="post">
+  <div><input type="text" name="user"><input type="submit" value="用户数据更新"></div>
+</form>
 <form action="/showUser" method="post">
   <div><input type="text" name="user"><input type="submit" value="用户查询"></div>
 </form>
+
+管理员工具<br />
+<a href="/admin?do=FixupBooks">Fix up book model</a>
 {% endblock %}

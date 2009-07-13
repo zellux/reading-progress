@@ -20,10 +20,21 @@ class AddUser(webapp.RequestHandler):
         user = self.request.get('user')
         UserRegister(self, user)
 
+    def get(self):
+	self.post()
+
 class ShowUser(webapp.RequestHandler):
     def post(self):
         user = self.request.get('user')
         QueryUserBooks(self, user)
+
+    def get(self):
+        self.post()
+
+class UpdateUser(webapp.RequestHandler):
+    def post(self):
+        user = self.request.get('user')
+        UserRefresh(self, user)
 
     def get(self):
         self.post()
@@ -70,15 +81,25 @@ class AjaxGetPage(webapp.RequestHandler):
     def get(self):
 	self.pose()
 
+class AdminControl(webapp.RequestHandler):
+    def pose(self):
+	func = self.request.get('do')
+	globals()[func](self)
+
+    def get(self):
+	self.pose()
+	
 application = webapp.WSGIApplication(
     [('/', MainPage),
      ('/addUser', AddUser),
      ('/showUser', ShowUser),
+     ('/updateUser', UpdateUser),
      ('/randomProgress', TestRandomProgress),
      ('/showProgress', ShowProgress),
      ('/getOFCData', ShowOFCData),
      ('/updateRecord', AjaxUpdateRecord),
-     ('/ajaxGetPage', AjaxGetPage)
+     ('/ajaxGetPage', AjaxGetPage),
+     ('/admin', AdminControl)
      ],
     debug=True)
 
