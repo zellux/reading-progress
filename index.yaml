@@ -16,13 +16,13 @@ indexes:
   - name: owner
   - name: hide
 
-# Used 718 times in query history.
+# Used 719 times in query history.
 - kind: UpdatePoint
   properties:
   - name: book
   - name: date
 
-# Used 26 times in query history.
+# Used 28 times in query history.
 - kind: UpdatePoint
   properties:
   - name: book
