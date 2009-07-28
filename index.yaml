@@ -10,19 +10,19 @@ indexes:
 # automatically uploaded to the admin console when you next deploy
 # your application using appcfg.py.
 
-# Used 16 times in query history.
+# Unused in query history -- copied from input.
 - kind: BookState
   properties:
   - name: owner
   - name: hide
 
-# Used 719 times in query history.
+# Unused in query history -- copied from input.
 - kind: UpdatePoint
   properties:
   - name: book
   - name: date
 
-# Used 28 times in query history.
+# Used once in query history.
 - kind: UpdatePoint
   properties:
   - name: book
