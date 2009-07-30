@@ -16,13 +16,13 @@ indexes:
   - name: owner
   - name: hide
 
-# Unused in query history -- copied from input.
+# Used 3 times in query history.
 - kind: UpdatePoint
   properties:
   - name: book
   - name: date
 
-# Used once in query history.
+# Used 2 times in query history.
 - kind: UpdatePoint
   properties:
   - name: book

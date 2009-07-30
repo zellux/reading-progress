@@ -62,7 +62,7 @@ function showForm(bkey) {
     var d = new Date();
     coverimg = $("#"+bkey+" div.cover img").attr("src");
     $("#updateCover img").attr("src", coverimg);
-    $("#updateDay").attr("value", "" + d.getFullYear() + "-" + d.getMonth() + "-" + d.getDate());
+    $("#updateDay").attr("value", "" + d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate());
 }
 
 function updateRecord(date, page) {
